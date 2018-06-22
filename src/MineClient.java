@@ -195,9 +195,7 @@ public class MineClient extends JFrame {
 
     //自定义panel
     public class MyPanel extends JPanel {
-        /**
-         *
-         */
+
         private static final long serialVersionUID = 1L;
 
         public void paint(Graphics g) {
@@ -225,7 +223,8 @@ public class MineClient extends JFrame {
                 g.drawString("GAME OVER!!", this.getWidth() / 2 - 80,
                         this.getHeight() / 2);
             }
-            //画当前游戏进行时间  和未扫的地雷数目
+
+            //画当前游戏进行时间和未扫的地雷数目
             drawTimeAndMineNum(g);
 
             //取得游戏胜利
