@@ -7,10 +7,10 @@ import java.util.ArrayList;
  * MineClient扫雷客户端类
  *
  * @author zhaiaxin
- * @time 2018/6/18 19:38
+ * 2018/6/18 19:38
  */
 
-public class MineClient extends JFrame {
+public class Mine extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,18 +58,19 @@ public class MineClient extends JFrame {
 
     /**
      * mineClient构造器
-     * @param screenWidth
-     * @param screenHeight
-     * @param mineNum
+     * @param screenWidth 屏幕宽度
+     * @param screenHeight 屏幕高度
+     * @param mineNum 地雷总数
      */
-    public MineClient(int screenWidth, int screenHeight, int mineNum) {
+    public Mine(int screenWidth, int screenHeight, int mineNum) {
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
         this.mineNum = mineNum;
 
+
         //初始化菜单栏
         initMenu();
-        setTitle("mineSweeping");
+        setTitle("扫雷");
         setIconImage(icon);
         setSize(screenWidth, screenHeight);
         setLocationRelativeTo(null);
@@ -78,11 +79,11 @@ public class MineClient extends JFrame {
 
         initList();
         myPanel = new MyPanel();
-        myPanel.setBackground(Color.BLACK);
+        myPanel.setBackground(new Color(192, 192, 192));
         add(myPanel);
 
         //鼠标事件
-        myPanel.addMouseListener(new MyMouseListener(this));
+        myPanel.addMouseListener(new MouseListener(this));
         new updateThread().start();
     }
 
@@ -91,19 +92,20 @@ public class MineClient extends JFrame {
      */
     private void initMenu() {
 
-        menu = new JMenu("setting");
+
+        menu = new JMenu("开始");
         menuBar = new JMenuBar();
-        lowLevel = new JMenuItem("Junior(10)");
-        midLevel = new JMenuItem("middle(44)");
-        heightLevel = new JMenuItem("senior(99)");
-        restart = new JMenuItem("restart");
+        lowLevel = new JMenuItem("初级");
+        midLevel = new JMenuItem("中级");
+        heightLevel = new JMenuItem("高级");
+        restart = new JMenuItem("重开");
 
         lowLevel.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 dispose();
-                new MineClient(225, 305, 10);
+                new Mine(225, 305, 10);
             }
         });
 
@@ -112,7 +114,7 @@ public class MineClient extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 dispose();
-                new MineClient(380, 460, 44);
+                new Mine(380, 460, 49);
             }
         });
 
@@ -121,7 +123,7 @@ public class MineClient extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 dispose();
-                new MineClient(660, 460, 99);
+                new Mine(660, 460, 99);
             }
         });
 
@@ -130,7 +132,7 @@ public class MineClient extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 dispose();
-                new MineClient(screenWidth, screenHeight, mineNum);
+                new Mine(screenWidth, screenHeight, mineNum);
             }
         });
 
@@ -187,10 +189,7 @@ public class MineClient extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        new MineClient(225, 305, 10);
 
-    }
 
 
     //自定义panel
@@ -217,11 +216,9 @@ public class MineClient extends JFrame {
                         bomb.setWhat(bomb.getHide());
                     }
                 }
-                Font font = new Font("微软雅黑", Font.BOLD, 20);
-                g.setFont(font);
-                g.setColor(new Color(255, 0, 255));
-                g.drawString("GAME OVER!!", this.getWidth() / 2 - 80,
-                        this.getHeight() / 2);
+                Toolkit tk = Toolkit.getDefaultToolkit();
+                Image img = tk.getImage(Mine.class.getResource("/Image/sad.jpg"));
+                g.drawImage(img, this.getWidth() / 2 , 0, 20, 20, this);
             }
 
             //画当前游戏进行时间和未扫的地雷数目
@@ -231,44 +228,45 @@ public class MineClient extends JFrame {
             if (!gameState.equals("lose") && notMine + mineNum == colNum * rowNum) {
                 gameState = "win";
                 Toolkit tk = Toolkit.getDefaultToolkit();
-                Image img = tk.getImage("Image/win.jpg");
-                g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-                Font font1 = new Font("华文行楷", Font.BOLD, 40);
-                g.setFont(font1);
-                g.setColor(new Color(248, 29, 56));
-                g.drawString("YOU WIN!!!", this.getWidth() / 2 - 100, 30);
+                Image img = tk.getImage(Mine.class.getResource("/Image/win.jpg"));
+                g.drawImage(img, this.getWidth() / 2 , 0,20, 20,  this);
             }
         }
 
         private void drawTimeAndMineNum(Graphics g) {
             Font font = new Font("微软雅黑", Font.BOLD, 15);
             g.setFont(font);
-            g.setColor(Color.orange);
-            g.drawString("time" + time + " s", 0, this.getHeight() - 20);
-            g.drawString("Residual Mine：" + restMine + " ", this.getWidth() - 100, this.getHeight() - 20);
+            g.setColor(Color.black);
+            g.drawString("时间：" + time + " s", 0, this.getHeight() - 10);
+            g.drawString("未扫雷数：" + restMine + " ", this.getWidth() - 100, this.getHeight() - 10);
 
         }
     }
 
-    //屏幕每隔100ms刷新一次
+    //屏幕每隔10ms刷新一次
     public class updateThread extends Thread {
         public void run() {
 
             while (true) {
                 repaint();
                 if (!firstClick) {
-                    timer += 100;
+                    timer += 10;
                     if (timer == 1000) {
                         timer = 0;
                         time++;
                     }
                 }
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
+
+    public static void main(String[] args) {
+        new Mine(225, 305, 10);
+    }
+
 }

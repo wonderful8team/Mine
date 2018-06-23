@@ -6,40 +6,47 @@ import java.awt.Toolkit;
 /**
  * Bomb炸弹类
  *
- * @author yuanqi
- * @time 2018/6/18 17:08
+ * @author zhaiaxin
+ * 2018/6/18 17:08
  */
 
 public class Bomb {
+
+    //地雷的横坐标
     private int x;
+    //地雷的纵坐标
     private int y;
+    //情况数，有0-13种情况
     private int what;
     private int hide = 0;
+    //窗口的宽度
     private int w = 19;
+    //窗口的高度
     private int h = 19;
-    private MineClient mc;
+    private Mine mc;
     private Toolkit tk = Toolkit.getDefaultToolkit();
-    private Image bomb = tk.getImage("Image/bomb.jpg");
-    private Image bomb0 = tk.getImage("Image/bomb0.jpg");
-    private Image zeroBomb = tk.getImage("Image/0.jpg");
-    private Image oneBomb = tk.getImage("Image/1.jpg");
-    private Image twoBomb = tk.getImage("Image/2.jpg");
-    private Image threeBomb = tk.getImage("Image/3.jpg");
-    private Image fourBomb = tk.getImage("Image/4.jpg");
-    private Image fiveBomb = tk.getImage("Image/5.jpg");
-    private Image sixBomb = tk.getImage("Image/6.jpg");
-    private Image severnBomb = tk.getImage("Image/7.jpg");
-    private Image eightBomb = tk.getImage("Image/8.jpg");
-    private Image flag = tk.getImage("Image/flag.jpg");
-    private Image flag2 = tk.getImage("Image/flag2.jpg");
-    private Image bg = tk.getImage("Image/s.jpg");
+
+    private Image bomb = tk.getImage(Bomb.class.getResource("/Image/bomb.jpg"));
+    private Image bomb0 = tk.getImage(Bomb.class.getResource("/Image/bomb0.jpg"));
+    private Image zeroBomb = tk.getImage(Bomb.class.getResource("/Image/0.jpg"));
+    private Image oneBomb = tk.getImage(Bomb.class.getResource("/Image/1.jpg"));
+    private Image twoBomb = tk.getImage(Bomb.class.getResource("/Image/2.jpg"));
+    private Image threeBomb = tk.getImage(Bomb.class.getResource("/Image/3.jpg"));
+    private Image fourBomb = tk.getImage(Bomb.class.getResource("/Image/4.jpg"));
+    private Image fiveBomb = tk.getImage(Bomb.class.getResource("/Image/5.jpg"));
+    private Image sixBomb = tk.getImage(Bomb.class.getResource("/Image/6.jpg"));
+    private Image severnBomb = tk.getImage(Bomb.class.getResource("/Image/7.jpg"));
+    private Image eightBomb = tk.getImage(Bomb.class.getResource("/Image/8.jpg"));
+    private Image flag = tk.getImage(Bomb.class.getResource("/Image/flag.jpg"));
+    private Image flag2 = tk.getImage(Bomb.class.getResource("/Image/flag2.jpg"));
+    private Image bg = tk.getImage(Bomb.class.getResource("/Image/s.jpg"));
 
     public Bomb() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    public Bomb(int x, int y, int what, MineClient mc) {
+    public Bomb(int x, int y, int what, Mine mc) {
         super();
         this.x = x;
         this.y = y;
@@ -113,4 +120,6 @@ public class Bomb {
     public Rectangle getRec() {
         return new Rectangle(x, y, w, h);
     }
+
+
 }

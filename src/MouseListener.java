@@ -8,22 +8,22 @@ import java.util.Random;
  * MyMouseListener鼠标监听类
  *
  * @author zhaiaxin
- * @time 2018/6/19 09:10
+ * 2018/6/19 09:10
  */
 
-public class MyMouseListener extends MouseAdapter {
-    private MineClient mc;
+public class MouseListener extends MouseAdapter {
+    private Mine mc;
     private int colNum;
     private int rowNum;
     private boolean isFirstClick;
     private ArrayList<Bomb> bombList = new ArrayList<Bomb>();
     boolean[] vis ;
-    public MyMouseListener() {
+    public MouseListener() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    public MyMouseListener(MineClient mc) {
+    public MouseListener(Mine mc) {
         super();
         this.mc = mc;
         colNum = mc.getColNum();
@@ -32,10 +32,11 @@ public class MyMouseListener extends MouseAdapter {
         bombList = mc.getBombList();
         this.isFirstClick=mc.isFirstClick();
     }
-    /*
+
+    /**
      * 鼠标左键  那么显示当前位置的地雷
      * 鼠标右键  那么标记当前位置
-     *
+     * @param e 鼠标事件
      */
     public void mouseReleased(MouseEvent e) {
         if (mc.getGameState().equals("lose")) {
@@ -157,6 +158,7 @@ public class MyMouseListener extends MouseAdapter {
         if (mc.getGameState().equals("lose")) {
             return;
         }
+        //BUTTON1-左键，BUTTON2-滚轮，BUTTON3-右键
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (isFirstClick) {
                 isFirstClick = false;
